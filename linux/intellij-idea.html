@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:wb="http://open.weibo.com/wb">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>IntelliJ IDEA 智能集成开发环境</title>
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3309993166" type="text/javascript" charset="utf-8"></script>
+
+</head>
+    <body>
+        <div class="container">
+          <div class="site">
+
+          <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a href="/" class="brand">开源书屋</a>
+      <ul class="nav">
+        <li><a class="extra" href="/">博文</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+          <h1>IntelliJ IDEA 智能集成开发环境</h1>
+<p class="meta">30 Oct 2013</p>
+
+<div class="post">
+<p>编写一个像 <code>HelloWorld</code> 这样的简单程序, 用记事本基本就可以完成了, 但如果是开发一个工程项目, 就需要一个强大的集成开发环境 (IDE). 当然开发 Java 项目的 IDE 有很多, 比较有名的当数 Eclipse, 以及它的一个重要扩展 MyEclipse, 然而, 今天我们要介绍的是一个更强大、更智能的 IDE --- IntelliJ IDEA.</p>
+
+<p>IntelliJ IDEA (下面简称 IDEA) 是捷克软件公司 <a href="http://www.jetbrains.com/">JetBrains</a> 旗下的核心产品之一, 主要用于开发 Java 应用, 它被誉为业界最好的 Java 开发工具之一, 尤其在代码智能补全、代码自动提示等方面, 可以说是&quot;神器&quot;. 关于产品的特性, 不在这里赘述, 详情参见<a href="http://www.jetbrains.com/idea/">官网产品介绍页面</a>.</p>
+
+<p>IDEA 支持 Windows、Mac OS X、Linux 三种平台, 可以说掌握了它, 无论在那个平台上, 进行开发都没有问题. 此外, JetBrains 公司还有推出 PhpStorm (开发 PHP), PyCharm (开发 Python), RubyMine (开发 Ruby, Rails) 等 IDE, 这些 IDE 都是在同一个基础之上, 整合相关插件完成的, 它们的界面、菜单、快捷键非常相似, 近日由谷歌推出的 Android Studio, 也建立在相同的基础之上, 换句话说, 掌握了 IDEA, 就掌握了多门语言的开发工具.</p>
+
+<p>本文仅讲解在 Ubuntu 下, IDEA 12 的安装和配置方法, 并创建一个简单的 Java 学习项目.</p>
+
+<h2 id="安装">安装</h2>
+
+<p>在<a href="http://www.jetbrains.com/idea/download/index.html">官网的下载页面</a>, 下载对应平台的最新版本, 截止笔者编写本章时, 最新版为 2013-06-10 发布的 <code>12.1.4</code>.</p>
+
+<p>下载完以后, 解压缩即可. 为了以后访问方便, 将文件夹重命名为 <code>idea</code>.</p>
+
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> -xkzvf ideaIU-12.1.4.tar.gz
+<span class="kw">mv</span> idea-IU-129.713 idea</code></pre>
+
+<p>运行 <code>idea/bin/idea.sh</code> 文件, 启动 IDEA, 可能返回如下错误提示</p>
+
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Install</span> $ ./idea/bin/idea.sh
+<span class="kw">Unrecognized</span> VM option <span class="st">&#39;+UseCodeCacheFlushing&#39;</span>
+<span class="kw">Could</span> not create the Java virtual machine.</code></pre>
+
+<p>提示说明, Java 虚拟机的选项 <code>+UseCodeCacheFlushing</code> 不认识, 那么直接删除这个选项即可. 关键是这个选项在哪里? 我们首先想到, 可能在 <code>idea/bin</code> 下面, 执行查找命令</p>
+
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">bin</span> $ grep <span class="st">&#39;UseCodeCacheFlushing&#39;</span> *.*
+<span class="kw">idea64.vmoptions</span>:-XX:+UseCodeCacheFlushing
+<span class="kw">idea.vmoptions</span>:-XX:+UseCodeCacheFlushing</code></pre>
+
+<p>从上面的输出结果看到, 有两个文件 <code>idea64.vmoptions</code> 和 <code>idea.vmoptions</code> 都包含了这个选项, 从 <code>64</code> 可以猜想是指 64 位计算机.</p>
+
+<p>于是我们有了解决方法, 如果你的系统是 32 位, 就注释掉 <code>idea.vmoptions</code> 文件中对应的行; 如果你的系统是 64 位, 就注释掉 <code>idea64.vmoptions</code> 文件中对应的行. 查看系统位数的方法</p>
+
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">getconf</span> LONG_BIT
+<span class="kw">32</span></code></pre>
+
+<p>修改完以后, 应该就能正常启动了, 为了方便以后启动, 建议将启动命令定义成一个别名.</p>
+
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">alias</span> idea=<span class="st">&#39;sh /home/richard/Install/idea/bin/idea.sh&#39;</span></code></pre>
+
+<p></p>
+
+<h2 id="创建项目">创建项目</h2>
+
+<p>第一次启动 IDEA, 会弹出用户设置向导, 根据提示完成注册和简单的设置. 设置完成以后, 将弹出欢迎页面, 如下图所示.</p>
+
+<div class="figure">
+<img src="/images/welcome.png" alt="IntelliJ IDEA 欢迎页面" /><p class="caption">IntelliJ IDEA 欢迎页面</p>
+</div>
+
+<p></p>
+
+<p>接下来创建一个 Java 模块, 用于学习 Java 基础知识, 并熟悉这套 IDE. 在欢迎页面, 选择 <code>Create New Project</code>, 弹出 <code>New Project</code> 对话框, 如下图所示. 在左边选择 <code>Java Module</code>, 在右边的 <code>Project location</code> 选择项目存放的路径, 这里选择 <code>/home/henry/workspace_java</code>.</p>
+
+<div class="figure">
+<img src="/images/new_project.png" alt="新建 Mahout 模块" /><p class="caption">新建 Mahout 模块</p>
+</div>
+
+<p>展开右下方的 <code>More Settings</code>, IDEA 默认将创建一个与项目同名的模块, 这里改为 <code>study</code>, 创建一个学习模块.</p>
+
+<p>在这里可以看出 IDEA 与 Eclipse 之间的一个不同之处, Eclipse 的一个工作目录 (workspace) 下可以有多个项目, 而 IDEA 却只有一个项目, 但一个项目下可以有多个模块, 所以, 有人将 IDEA 下的模块与 Eclipse 下的项目对等起来, 也有人建议, 在 IDEA 中, 一个项目下尽量只有一个模块, 不同的模块分属于不同的项目.</p>
+
+<p></p>
+
+<p>单击 <code>Next</code>, 进入支持技术选择页面, 如下图所示, 这里我们创建一个空项目, 单击 <code>Finish</code> 完成创建.</p>
+
+<div class="figure">
+<img src="/images/new_project2.png" alt="完成 Mahout 模块" /><p class="caption">完成 Mahout 模块</p>
+</div>
+
+<p>由此, 我们创建了一个空的 Java 项目, 名为 <code>workspace_java</code>, 其中有一个 <code>study</code> 模块. 进入模块以后可以创建一个简单 HelloWorld 类来试试看.</p>
+
+<p></p>
+
+<h2 id="配置">配置</h2>
+
+<h3 id="选择主题-设置字体">选择主题, 设置字体</h3>
+
+<p>默认的界面有点灰色, 有一款黑色界面, 非常酷, 在 <code>Settings</code> 的搜索框输入关键字 <code>theme</code>, 选择设置模块 <code>IDE Settings,Appearance</code>, 如下图所示.</p>
+
+<div class="figure">
+<img src="/images/settings_theme.png" alt="选择主题, 设置字体" /><p class="caption">选择主题, 设置字体</p>
+</div>
+
+<ul>
+<li>选择主题. 在 <code>Theme</code> 栏选择 <code>Darcula</code> 主题.</li>
+<li>设置字体. 为了正确显示中文, 勾选 <code>Override default fonts by</code>, 然后在 <code>Name</code> 栏选择 <code>SimSun</code> 主题.</li>
+</ul>
+
+<p></p>
+
+<h3 id="光标位置">光标位置</h3>
+
+<p>默认情况下, 光标是可以随意放置的, 可能会有些不习惯, 可通过如下方式取消随意放置 在 <code>Settings</code> 的搜索框输入关键字 <code>caret</code>, 选择设置模块 <code>IDE Settings,Editor</code>, 如下图所示,<br />取消勾选右边的 <code>Allow placement of caret after end of line</code> 即可.</p>
+
+<div class="figure">
+<img src="/images/settings_caret.png" alt="修改光标位置" /><p class="caption">修改光标位置</p>
+</div>
+
+<p></p>
+
+<h3 id="显示行号">显示行号</h3>
+
+<p>在 <code>Settings</code> 的搜索框输入关键字 <code>numbers</code>, 选择设置模块 <code>IDE Settings,Editor,Appearance</code>, 如下图所示, 勾选右边的 <code>Show line numbers</code> 即可.</p>
+
+<div class="figure">
+<img src="/images/settings_line_number.png" alt="显示行号" /><p class="caption">显示行号</p>
+</div>
+
+<h2 id="快捷键">快捷键</h2>
+
+<ul>
+<li><code>Ctrl+Shift+F12</code> 关闭工具窗口, 最大化编辑界面.</li>
+<li><code>Shift+F12</code> 调出默认布局. 每次启动 IDEA 以后, 调整好窗口布局, 尤其是工具窗口布局, 然后使用菜单 <code>Window,Store Current Layout as Default</code>, 设为默认布局.</li>
+<li><code>Ctrl+E</code> 调出最近使用的文件和工具窗口列表.</li>
+<li><code>Ctrl+N</code> 按类名查找文件, 为了让打开的文件与资源窗口同步, 勾选 <code>Autoscroll from Source</code>.</li>
+<li><code>Ctrl+W</code> 语法词选择, 利用这种方法可以快速选择对象, 重点是进行接下来的操作.</li>
+<li><code>Ctrl+Alt+V</code> 引入新变量</li>
+<li><code>Ctrl+Shift+J</code> 连接行</li>
+<li><code>Ctrl+X</code> 剪切行</li>
+<li><code>Ctrl+D</code> 复制行</li>
+<li><code>Ctrl+Q</code> 调出 API 帮助信息</li>
+<li><code>Ctrl+B</code> 调出定义</li>
+<li><code>Ctrl+U</code> 调出使用 (自定义 Find Usage)</li>
+<li><code>Alt+Insert</code> 自动生成代码</li>
+<li><code>Ctrl+Shift+B</code> 包围 (自定义 surround)</li>
+<li><code>Ctrl+Shift+Enter</code> 补全当前语句</li>
+<li><code>Ctrl+/</code> 行注释</li>
+<li><code>Ctrl+Shift+/</code> 块注释</li>
+<li><code>Ctrl+F12</code> 调出类的结构, 方便快速跳转</li>
+<li><code>Alt+Shift+Insert</code> 列选择</li>
+<li><code>Ctrl+Shift+F9</code> 编译当前文件</li>
+<li><code>Ctrl+K</code> 检查文件版本更新, 前提是配置了 SVN 或 Git 版本控制软件</li>
+</ul>
+
+</div>
+
+          <wb:comments url="auto" border="y" fontsize="14" width="auto" ralateuid="3703578670"/>
+          <div class="footer">
+  <div class="contact">
+    官方邮件<br/>
+    <a href="mailto:oboooks@gmail.com">oboooks@gmail.com</a>
+  </div>
+  <div class="contact">
+    官方微博<br/>
+    <a href="http://weibo.com/oboooks">weibo.com/oboooks</a>
+  </div>
+  <div class="contact">
+    代码仓库<br/>
+    <a href="http://github.com/oboooks/">github.com/oboooks</a>
+  </div>
+</div>
+
+          </div>
+        </div>
+    </body>
+</html>

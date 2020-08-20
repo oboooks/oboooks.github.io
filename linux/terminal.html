@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:wb="http://open.weibo.com/wb">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Linux 使用技巧 --- 终端</title>
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3309993166" type="text/javascript" charset="utf-8"></script>
+
+</head>
+    <body>
+        <div class="container">
+          <div class="site">
+
+          <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a href="/" class="brand">开源书屋</a>
+      <ul class="nav">
+        <li><a class="extra" href="/">博文</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+          <h1>Linux 使用技巧 --- 终端</h1>
+<p class="meta">06 Aug 2013</p>
+
+<div class="post">
+<h2>terminator</h2>
+
+<dl><dt>安装</dt><dd><code>sudo apt-get install terminator</code></dd><dt>键盘</dt><dd><code>Ctrl+Shift+E</code> 垂直分割窗口</dd><dd><code>Ctrl+Shift+O</code> 水平分割窗口</dd><dd><code>Ctrl+Shift+T</code> 打开新的终端窗口 Tab</dd><dd><code>Ctrl+Shift+C</code> 复制</dd><dd><code>Ctrl+Shift+V</code> 粘贴</dd><dd><code>Ctrl+Shift+X</code> 全屏当前窗口, 再输入遍就还原了</dd><dd><code>Ctrl+Shift+G</code> 清除当前窗口 (类似 clear)</dd><dd><code>Alt+up</code> (上方向键) 切换到当前焦点上面的 Tab</dd><dd><code>Alt+down</code> (下方向键) 切换到当前焦点下面的 Tab</dd><dd><code>Alt+left</code> (左方向键) 切换到当前焦点左面的 Tab</dd><dd><code>Alt+right</code> (右方向键) 切换到当前焦点右面的 Tab</dd></dl>
+
+<h2>zsh</h2>
+
+<p>zsh 是 bash 的替代品, 功能强大.</p>
+
+<ul>
+<li>  拼写智能纠错.</li>
+<li>  更强的补全功能, 包括参数补全.</li>
+<li>  多个会话终端共享历史记录, 并且查找历史记录更加智能.</li>
+<li>  更加强大的别名定义.</li>
+<li>  引入增强插件.</li>
+<li>  可选多种皮肤 (需要 <code>oh-my-zsh</code>).</li>
+</ul>
+
+<p>下面记录我在 Ubuntu 11.10 上将 bash 替换为 zsh 的过程.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">sudo apt-get install zsh
+curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+</code></pre></div>
+<p>编辑配置文件 <code>~/.zshrc</code>, 添加别名, 导入下列配置</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">source ~/.bash_profile
+source ~/.profile
+</code></pre></div>
+<p>选择 zsh 作为 terminator 的默认 shell.
+右键 <em>Terminator</em>, 选择 <em>Preferences</em>, 依次选择 <em>Profiles</em>, <em>Command</em>,
+然后按下图所示的情形进行设置.</p>
+
+<p><img src="/images/terminator-zsh.png" alt="选择 zsh 作为 terminator 的默认 shell"></p>
+
+<p>将 zsh 作为系统默认 shell, 重启生效</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">chsh -s `which zsh`
+</code></pre></div>
+<h2>z</h2>
+
+<p>z 可以方便地自动匹配到你最多使用的目录并跳转.
+安装方法如下, 克隆源码到任意用户目录</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">git clone https://github.com/rupa/z.git
+</code></pre></div>
+<p>添加下列语句到 <code>.zshrc</code> 或者 <code>.bashrc</code> 中, 注意, 点与斜线之间有一个空格.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">. /path/to/z.sh
+</code></pre></div>
+<h2>延伸阅读</h2>
+
+<ul>
+<li>  <a href="http://foocoder.com/blog/wo-zai-yong-de-macruan-jian-2.html/">我在用的mac软件(2)-终端环境之zsh和z(*nix都适用)</a></li>
+<li>  <a href="http://askubuntu.com/questions/253812/change-default-shell-for-terminator">Change default shell for Terminator</a></li>
+</ul>
+
+</div>
+
+          <wb:comments url="auto" border="y" fontsize="14" width="auto" ralateuid="3703578670"/>
+          <div class="footer">
+  <div class="contact">
+    官方邮件<br/>
+    <a href="mailto:oboooks@gmail.com">oboooks@gmail.com</a>
+  </div>
+  <div class="contact">
+    官方微博<br/>
+    <a href="http://weibo.com/oboooks">weibo.com/oboooks</a>
+  </div>
+  <div class="contact">
+    代码仓库<br/>
+    <a href="http://github.com/oboooks/">github.com/oboooks</a>
+  </div>
+</div>
+
+          </div>
+        </div>
+    </body>
+</html>

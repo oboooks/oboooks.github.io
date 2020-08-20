@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:wb="http://open.weibo.com/wb">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Sublime Text 3 文本编辑器</title>
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3309993166" type="text/javascript" charset="utf-8"></script>
+
+</head>
+    <body>
+        <div class="container">
+          <div class="site">
+
+          <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a href="/" class="brand">开源书屋</a>
+      <ul class="nav">
+        <li><a class="extra" href="/">博文</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+          <h1>Sublime Text 3 文本编辑器</h1>
+<p class="meta">29 Oct 2013</p>
+
+<div class="post">
+<p>Sublime 是一个跨平台的智能文本编辑器, 它的功能特性参见<a href="http://www.sublimetext.com/">官方网站</a>, 本文仅讲解 Ubuntu 下的安装配置方式.</p>
+
+<h2 id="安装">安装</h2>
+
+<p>根据 CPU 的位数选择合适的版本, 然后使用如下命令进行安装</p>
+
+<pre><code>sudo dpkg -i sublime-text_build-3047_i386.deb</code></pre>
+
+<p>在终端输入 <code>subl</code>, 回车即可启动.</p>
+
+<h2 id="中文输入">中文输入</h2>
+
+<p>此时, Sublime 还不能利用小企鹅输入法 (fcitx) 输入中文, 详细解决方案参见<a href="http://www.sinosky.org/linux-sublime-text-fcitx.html">这里</a>. 根据指引, 将编译生成的 <code>libsublime-imfix.so</code> (备份) 拷贝到 <code>/opt/sublime_text/</code> 目录下, 编辑 <code>/usr/bin/subl</code>, 在 <code>exec</code> 前添加如下语句</p>
+
+<pre><code>export LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so</code></pre>
+
+<p>再次启动 <code>subl</code>, 即可输入中文.</p>
+
+<h2 id="配置">配置</h2>
+
+<p>使用菜单 <code>Preferences,Settings-User</code>, 直接编辑配置文件.</p>
+
+<pre><code>&quot;translate_tabs_to_spaces&quot;: true,
+&quot;trim_trailing_white_space_on_save&quot;: true</code></pre>
+
+<h2 id="快捷键">快捷键</h2>
+
+<ul>
+<li><code>Ctrl+Shift+P</code> 打开命令面板</li>
+<li><code>Ctrl+P</code> 搜索项目中的文件</li>
+<li><code>Ctrl+G</code> 跳转到第几行</li>
+<li><code>Ctrl+W</code> 关闭当前打开文件</li>
+<li><code>Ctrl+Shift+W</code> 关闭所有打开文件</li>
+<li><code>Ctrl+Shift+V</code> 粘贴并格式化</li>
+<li><code>Ctrl+D</code> 选择单词, 重复可增加选择下一个相同的单词</li>
+<li><code>Ctrl+L</code> 选择行, 重复可依次增加选择下一行</li>
+<li><code>Ctrl+Shift+L</code> 选择多行</li>
+<li><code>Ctrl+Shift+Enter</code> 在当前行前插入新行</li>
+<li><code>Ctrl+X</code> 删除当前行</li>
+<li><code>Ctrl+M</code> 跳转到对应括号</li>
+<li><code>Ctrl+U</code> 软撤销, 撤销光标位置</li>
+<li><code>Ctrl+J</code> 选择标签内容</li>
+<li><code>Ctrl+F</code> 查找内容</li>
+<li><code>Ctrl+Shift+F</code> 查找并替换</li>
+<li><code>Ctrl+H</code> 替换</li>
+<li><code>Ctrl+R</code> 前往 method</li>
+<li><code>Ctrl+N</code> 新建窗口</li>
+<li><code>Ctrl+K+B</code> 开关侧栏</li>
+<li><code>Ctrl+Shift+M</code> 选中当前括号内容, 重复可选着括号本身</li>
+<li><code>Ctrl+F2</code> 设置/删除标记</li>
+<li><code>Ctrl+/</code> 注释当前行</li>
+<li><code>Ctrl+Shift+/</code> 当前位置插入注释</li>
+<li><code>Ctrl+Alt+/</code> 块注释, 并Focus到首行, 写注释说明用的</li>
+<li><code>Ctrl+Shift+A</code> 选择当前标签前后, 修改标签用的</li>
+<li><code>F11</code> 全屏</li>
+<li><code>Shift+F11</code> 全屏免打扰模式, 只编辑当前文件</li>
+<li><code>Alt+F3</code> 选择所有相同的词</li>
+<li><code>Alt+.</code> 闭合标签</li>
+<li><code>Alt+Shift+数字</code> 分屏显示</li>
+<li><code>Alt+数字</code> 切换打开第 N 个文件</li>
+<li><code>Shift+右键拖动</code> 光标多不, 用来更改或插入列内容</li>
+<li>鼠标的前进后退键可切换 <code>Tab</code> 文件</li>
+<li>按 <code>Ctrl</code>, 依次点击或选取, 可需要编辑的多个位置</li>
+<li><code>Ctrl+Shift+上下键</code> 可替换行</li>
+</ul>
+
+<h2 id="插件管理">插件管理</h2>
+
+<p>安装 Sublime 的插件管理器 Package Control, 详情参见<a href="https://sublime.wbond.net/installation">官方文档</a>.</p>
+
+<p>使用菜单 <code>View,Show Console</code>, 或者快捷键 <code>Ctrl+`</code>, 调出终端, 输入以下内容, 然后回车, 将自动完成安装.</p>
+
+<pre><code>import urllib.request,os; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), &#39;wb&#39;).write(urllib.request.urlopen( &#39;http://sublime.wbond.net/&#39; + pf.replace(&#39; &#39;,&#39;%20&#39;)).read())</code></pre>
+
+<h3 id="git-版本控制">Git 版本控制</h3>
+
+<p>使用菜单 <code>Preferences,Package Control</code>, 或者快捷键 <code>Ctrl+Shift+P</code>, 调出命令窗口. 输入 <code>install</code> 筛选出需要的命令, 选择 <code>Package Control: Install Package</code>, 然后回车, 稍等片刻 (注意状态栏 <code>Loading repositories</code>), 调出可安装的插件列表.</p>
+
+<p>输入 <code>git</code> 筛选出需要的插件, 选择 <code>Git</code>, 然后回车, 将自动完成安装, 最终操作方式将集中在菜单 <code>Tools,Git</code>.</p>
+
+<h3 id="插入日期时间">插入日期时间</h3>
+
+<p>下载 <a href="https://github.com/kairyou/SublimeInsertDatetime">SublimeInsertDatetime 源码</a> 的 <code>zip</code> 文件, 解压缩到 <code>sublime-text-3/Packages/insert-datetime</code>, 重启 Sublime3 即可. 可通过修改文件 <code>Default (Linux).sublime-keymap</code>, 定义快捷键映射.</p>
+
+<ul>
+<li><code>F5</code>, 输出 <code>2013-10-28</code></li>
+<li><code>Ctrl+F5</code>, 输出 <code>2013-10-28 22:58:05</code></li>
+<li><code>Ctrl+Shift+F5</code>, 输出 <code>星期一</code></li>
+</ul>
+
+</div>
+
+          <wb:comments url="auto" border="y" fontsize="14" width="auto" ralateuid="3703578670"/>
+          <div class="footer">
+  <div class="contact">
+    官方邮件<br/>
+    <a href="mailto:oboooks@gmail.com">oboooks@gmail.com</a>
+  </div>
+  <div class="contact">
+    官方微博<br/>
+    <a href="http://weibo.com/oboooks">weibo.com/oboooks</a>
+  </div>
+  <div class="contact">
+    代码仓库<br/>
+    <a href="http://github.com/oboooks/">github.com/oboooks</a>
+  </div>
+</div>
+
+          </div>
+        </div>
+    </body>
+</html>
